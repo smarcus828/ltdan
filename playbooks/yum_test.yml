@@ -1,0 +1,6 @@
+---
+- hosts: bubba.magicalchicken.com
+  become: yes
+  become_method: sudo
+  roles:
+  - yum_repo

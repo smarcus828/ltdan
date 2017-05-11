@@ -1,0 +1,23 @@
+---
+- name: VMware-Tools - Fetch and unzip tarball
+  unarchive:
+    src: http://forrest.magicalchicken.com/vmware/VMwareTools-10.1.0-4449150.tar.gz
+    dest: /tmp/
+    remote_src: True  
+
+- name: VMware-Tools - Run install script
+  command: /tmp/vmware-tools-distrib/vmware-install.pl -f -d
+  become: True
+
+#- name: VMware-Tools - Start and enable service
+#  service:
+#    name: vmtoolsd
+#    state: started
+#    enabled: yes
+
+- name: VMware-Tools - Remove install directory
+  file: 
+    path: "{{ item }}"    
+    state: absent
+  with_items:
+  - /tmp/vmware-tools-distrib

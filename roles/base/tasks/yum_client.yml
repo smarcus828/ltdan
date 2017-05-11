@@ -1,0 +1,7 @@
+---
+- copy:
+    src: centos-base.repo
+    dest: /etc/yum.repos.d/centos-base.repo
+    owner: root
+    group: root
+    mode: 0644

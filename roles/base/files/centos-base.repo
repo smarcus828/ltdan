@@ -1,0 +1,21 @@
+[centos-base]
+name=Magical Chicken CentOS Repository - Base
+#baseurl=http://repoman.ncdc.noaa.gov/centos/$releasever/$basearch/os/
+baseurl=http://ltdan.magicalchicken.com/mirrors/centos/$releasever/$basearch/os/
+enabled=1
+gpgcheck=1
+gpgkey=http://ltdan.magicalchicken.com/mirrors/magicalchicken.key
+
+[centos-updates]
+name=Magical Chicken CentOS Repository - Updates
+baseurl=http://ltdan.magicalchicken.com/mirrors/centos/$releasever/$basearch/updates/
+enabled=1
+gpgcheck=1
+gpgkey=http://ltdan.magicalchicken.com/mirrors/magicalchicken.key
+
+[centos-extras]
+name=Magical Chicken CentOS Repository - Extras
+baseurl=http://ltdan.magicalchicken.com/mirrors/centos/$releasever/$basearch/extras/
+enabled=1
+gpgcheck=1
+gpgkey=http://ltdan.magicalchicken.com/mirrors/magicalchicken.key

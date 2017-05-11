@@ -1,0 +1,6 @@
+---
+- hosts: icinga_clients
+  become: yes
+  become_method: sudo
+  roles:
+    - icinga_client

@@ -1,0 +1,15 @@
+---
+ntp_servers:
+ - 'ltdan.magcialchicken.com'
+ntp_peers: []
+ntp_panic: false
+ntp_iburst_enable: false
+ntp_disable_monitor: true
+ntp_restrict:
+ - 'default kod nomodify notrap nopeer noquery'
+ - '-6 default kod nomodify notrap nopeer noquery'
+ - '127.0.0.1 kod nomodify notrap nopeer'
+ - '-6 ::1 kod nomodify notrap nopeer'
+ntp_interfaces: [ ]
+ntp_driftfile: '/var/lib/ntp/drift'
+ntp_timezone: 'America/New_York'

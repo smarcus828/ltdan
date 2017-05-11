@@ -1,0 +1,14 @@
+---
+- name: Install Packages
+  package:
+    name: "{{ item }}"
+    state: installed
+  with_items:
+  - bind-utils      
+  - epel-release
+  - mailx
+  - wget
+
+- include: vmware.yml
+- include: selinux.yml
+- include: yum_client.yml

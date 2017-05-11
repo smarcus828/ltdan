@@ -1,0 +1,30 @@
+---
+- name: Install packages
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - rsync
+    - createrepo
+    - rpm-sign
+
+- name: Create yum directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+  with_items:
+    - /mirrors
+    - /usr/local/yum-sync
+
+- copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: 0755
+  with_items:
+    - { src: 'sync-repos.sh', dest: '/usr/local/' }
+    - { src: 'magicalchicken.key', dest: '/mirrors/' }

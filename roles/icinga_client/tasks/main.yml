@@ -1,0 +1,33 @@
+---
+- name: Create firewall rule for 5665
+  firewalld:
+    port: '{{ icinga_port }}/tcp'
+    permanent: true
+    immediate: yes
+    state: enabled
+
+
+- name: Remove bad epel repo
+  package:
+    name: "epel-release"
+    state: absent
+
+- name: Install required repositories
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - "http://packages.icinga.org/epel/7/release/noarch/icinga-rpm-release-7-1.el7.centos.noarch.rpm"
+    - "https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm"
+
+
+- name: Install packages
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+#    - "http://packages.icinga.org/epel/7/release/noarch/icinga-rpm-release-7-1.el7.centos.noarch.rpm"
+#    - "https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm"
+    - "nagios-plugins-all"
+    - "icinga2"
+    - "vim-icinga2"

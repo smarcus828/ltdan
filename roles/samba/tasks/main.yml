@@ -1,0 +1,17 @@
+---
+- name: Check packages
+#  become: yes
+  package:
+    name: "{{ item }}"
+    state: installed
+  with_items:
+    - samba
+    - cifs-utils
+
+#- name: Enable package
+#  service:
+#    name: "{{ item }}"
+#    state: started
+#    with_items:
+#        - "smb"
+#        - "nmb"
