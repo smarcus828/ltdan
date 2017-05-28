@@ -1,0 +1,4 @@
+---
+icinga_port: 5665
+icinga_master: 'forrest.magicalchicken.com'
+icinga_conf_dir: '/etc/icinga2/'

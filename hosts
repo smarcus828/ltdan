@@ -6,3 +6,16 @@ ltdan.magicalchicken.com
 mama.magicalchicken.com
 bubba.magicalchicken.com
 jenny.magicalchicken.com
+
+[icinga_master]
+forrest.magicalchicken.com
+
+[icinga_clients]
+mama.magicalchicken.com
+bubba.magicalchicken.com
+jenny.magicalchicken.com
+tex.magicalchicken.com
+
+[new]
+tex.magicalchicken.com
+dorothy.magicalchicken.com
