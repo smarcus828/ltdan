@@ -1,6 +1,67 @@
 ---
-- hosts: icinga_clients
+# Connect to the icinga master using the "hostitem" varible passed in from command line
+# retrieve token associated with hostitem
+# playbook is intended to be run as ansible-playbook playbooks/icinga-clients.yml -e hostitem=host.test.whatever
+
+
+- hosts: "forrest.magicalchicken.com"
+  become: yes
+  become_method: sudo
+
+  tasks:
+  - name: generate ticket on the icinga master and save it as a variable
+    shell: "/usr/lib64/icinga2/sbin/icinga2 pki ticket --cn {{ hostitem }}"
+    register: ticket
+
+  - name: debug stuffs
+    debug:
+      msg: "Ticket is {{ hostvars['forrest.magicalchicken.com']['ticket']['stdout'] }}"
+
+
+
+# Apply icinga_client Role - installs packages onto client
+- hosts: "{{ hostitem }}"
+  vars:
+  #icinga_port: 5665
+    icinga_conf_dir: '/etc/icinga2'
+    icinga_master: 'forrest.magicalchicken.com'
   become: yes
   become_method: sudo
   roles:
     - icinga_client
+
+  tasks:
+   - name: create pki folder
+     file:
+       path: "{{ icinga_conf_dir }}/pki"
+       state: "directory"
+       mode: "0700"
+       owner: "icinga"
+       group: "icinga"
+                                                                       
+
+   - name: create cert
+     shell: "icinga2 pki new-cert --cn {{ inventory_hostname }} --key /etc/icinga2/pki/{{ inventory_hostname }}.key --cert /etc/icinga2/pki/{{ inventory_hostname }}.crt"
+
+   - name: save the masters cert as trustedcert
+     shell: "icinga2 pki save-cert --key /etc/icinga2/pki/{{ inventory_hostname }}.key --cert /etc/icinga2/pki/{{ inventory_hostname }}.crt --trustedcert /etc/icinga2/pki/trusted-master.crt --host {{ icinga_master }}"
+
+   - name: request the certificate from the icinga server
+     shell: "icinga2 pki request --host {{ icinga_master }} --port {{ icinga_port }} --ticket \'{{ hostvars['forrest.magicalchicken.com']['ticket']['stdout'] }}\' --key /etc/icinga2/pki/{{ inventory_hostname }}.key --cert /etc/icinga2/pki/{{ inventory_hostname }}.crt --trustedcert /etc/icinga2/pki/trusted-master.crt --ca /etc/icinga2/pki/ca.key"
+
+
+   - name: node setup
+     shell: "icinga2 node setup --ticket \'{{ hostvars['forrest.magicalchicken.com']['ticket']['stdout'] }}\' --endpoint {{ icinga_master }} --zone {{ inventory_hostname }} --master_host {{ icinga_master }} --trustedcert /etc/icinga2/pki/trusted-master.crt --cn {{ inventory_hostname }}"
+
+   - name: Fix api accept_config
+     lineinfile:
+       path: "{{ icinga_conf_dir }}/features-available/api.conf"
+       regexp: "accept_config"
+       line: "  accept_config = true"
+
+   - name: Fix api accept_commands
+     lineinfile:
+       path: "{{ icinga_conf_dir }}/features-available/api.conf"
+       regexp: "accept_commands"
+       line: "  accept_commands = true"
+

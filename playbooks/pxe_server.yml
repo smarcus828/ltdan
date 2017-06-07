@@ -1,0 +1,6 @@
+---
+- hosts: pxe_servers
+  become: yes
+  become_method: sudo
+  roles:
+  - pxe

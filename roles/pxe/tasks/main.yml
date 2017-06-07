@@ -1,0 +1,23 @@
+---
+- name: Install PXE
+  package:
+    name: "{{ item }}"
+    state: installed
+  with_items:
+    - tftp-server
+    - syslinux
+
+- name: Open firewall
+  firewalld:
+    service: tftp
+    permanent: yes
+    immediate: true
+    state: enabled
+
+- name: Start services
+  service:
+    name: "{{ item }}"
+    state: started
+    enabled: yes
+  with_items:
+    - tftp
