@@ -6,6 +6,8 @@
   with_items:
     - tftp-server
     - syslinux
+    - syslinux-tftpboot
+    - xinetd
 
 - name: Open firewall
   firewalld:
@@ -21,3 +23,68 @@
     enabled: yes
   with_items:
     - tftp
+
+- name: create tftpboot folder
+  file:
+    path: "{{ item }}"
+    state: "directory"
+    mode: "0755"
+    owner: "root"
+    group: "root"
+  with_items:
+    - "{{ tftp_dir }}"
+    - "{{ tftp_dir }}/pxelinux.cfg"
+    - "{{ tftp_dir }}/centos7"
+
+- name: gather up filenames in /usr/share/syslinux
+  command: "find /usr/share/syslinux -type f"
+  register: syslinux_glob
+
+- name: copy files into tftpboot dir
+  copy:
+    src: "{{ item }}"
+    dest: "{{ tftp_dir }}"
+    remote_src: yes
+    owner: root
+    group: root
+    mode: 0644
+  with_items:
+    - "{{ syslinux_glob.stdout_lines }}"
+
+- name: Fetch boot image stuff
+  get_url:
+    url: "{{ item }}"
+    dest: "{{ tftp_dir }}/centos7/"
+    mode: 0744
+  with_items:
+    - http://ltdan/mirrors/centos/7.3.1611/x86_64/os/images/pxeboot/vmlinuz 
+    - http://ltdan/mirrors/centos/7.3.1611/x86_64/os/images/pxeboot/initrd.img
+
+- name: copy PXE menus over
+  copy:
+    src: "files/{{ item }}"
+    dest: "{{ tftp_dir }}/pxelinux.cfg/"
+    owner: root
+    group: root
+    mode: 0644
+  with_items:
+    - default
+    - kickstart.menu
+
+#####  DHCP ####
+- name: Install DHCP
+  package:
+    name: "{{ item }}"
+    state: installed
+  with_items:
+    - dhcp
+  when: install_dhcp == true
+
+- name: copy DHCP config file over
+  copy:
+    src: "files/dhcpd.conf"
+    dest: "/etc/dhcp/dhcpd.conf"
+    mode: 0644
+    owner: root
+    group: root
+  when: install_dhcp == true

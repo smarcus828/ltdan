@@ -1,0 +1,21 @@
+default vesamenu.c32
+prompt 0
+timeout 600
+
+display boot.img
+
+label whatever
+  menu label No kickstart
+  kernel centos7/vmlinuz
+  append initrd=centos7/initrd.img ip=dhcp 
+label rescue
+  menu label centos 7 rescue
+  kernel centos7/vmlinuz
+  append initrd=centos7/initrd.img rescue
+label kickstarts
+  menu label ^kickstart profiles
+  kernel vesamenu.c32
+  append pxelinux.cfg/kickstart.menu
+label local
+  menu label Boot from ^local drive
+  localboot 0xffff
