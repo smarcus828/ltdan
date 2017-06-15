@@ -1,0 +1,17 @@
+---
+- hosts: forrest.magicalchicken.com
+  become: yes
+  become_method: sudo
+
+  tasks:
+  - name: copy kickstart files over
+    copy:
+      src: "../files/kickstarts/{{ item }}"
+      dest: "/var/www/html"
+      owner: root
+      group: root
+      mode: 0644
+    with_items:
+      - ks-dorothy.cfg
+      - ks-tex.cfg
+      - ks-bubba.cfg
