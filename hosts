@@ -18,4 +18,10 @@ tex.magicalchicken.com
 
 [new]
 tex.magicalchicken.com
-dorothy.magicalchicken.com
+#dorothy.magicalchicken.com
+
+[pxe_servers]
+tex.magicalchicken.com
+
+[dnsmasq_servers]
+mama.magicalchicken.com

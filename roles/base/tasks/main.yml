@@ -8,6 +8,7 @@
   - epel-release
   - mailx
   - wget
+  - rsync
 
 - include: vmware.yml
 - include: selinux.yml
