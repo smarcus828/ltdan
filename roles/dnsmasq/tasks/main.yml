@@ -1,0 +1,23 @@
+---
+- name: Install Packages
+  package:
+    name: "{{ item }}"
+    state: installed
+  with_items:
+    - dnsmasq
+
+- name: Open firewall
+  firewalld:
+    service: tftp
+    permanent: yes
+    immediate: true
+    state: enabled
+
+- name: copy DNSMASQ menus over
+  copy:
+    src: "../files/dnsmasq/dnsmasq.conf"
+    dest: "/etc/"
+    owner: root
+    group: root
+    mode: 0644
+

@@ -7,12 +7,17 @@ label back
 label dorothy
   menu label Dorothy Harris
   kernel centos7/vmlinuz
-  append initrd=centos7/initrd.img ip=dhcp net.ifnames=0 ks=http://forrest.magicalchicken.com/ks-dorothy.cfg
+  append initrd=centos7/initrd.img ip=dhcp ks=http://forrest.magicalchicken.com/ks/ks-dorothy.cfg
 label tex
   menu label Tex
   kernel centos7/vmlinuz
-  append initrd=centos7/initrd.img ip=dhcp net.ifnames=0 ks=http://forrest.magicalchicken.com/ks-tex.cfg
+  append initrd=centos7/initrd.img ip=dhcp net.ifnames=0 ks=http://forrest.magicalchicken.com/ks/ks-tex.cfg
 label bubba
   menu label Bubba
   kernel centos7/vmlinuz
-  append initrd=centos7/initrd.img ip=dhcp net.ifnames=0 ks=http://forrest.magicalchicken.com/ks-bubba.cfg
+  append initrd=centos7/initrd.img ip=dhcp net.ifnames=0 ks=http://forrest.magicalchicken.com/ks/ks-bubba.cfg
+label test
+  menu label test
+  kernel centos7/vmlinuz
+  append initrd=centos7/initrd.img ip=dhcp net.ifnames=0 ks=http://forrest.magicalchicken.com/ks/ks-test.cfg
+
