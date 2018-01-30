@@ -9,6 +9,7 @@
   - mailx
   - wget
   - rsync
+  - git
 
 - include: vmware.yml
 - include: selinux.yml
