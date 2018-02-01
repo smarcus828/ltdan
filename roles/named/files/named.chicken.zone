@@ -1,0 +1,7 @@
+
+zone "magicalchicken.com" IN {
+	type master;
+	file "magicalchicken.zone";
+	allow-update { none; };
+};
+

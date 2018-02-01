@@ -1,0 +1,6 @@
+---
+- hosts: mama.magicalchicken.com
+  become: yes
+  become_method: sudo
+  roles:
+  - named

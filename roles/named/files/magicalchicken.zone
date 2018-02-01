@@ -1,0 +1,22 @@
+$TTL 3H
+@	IN SOA	forrest.magicalchicken.com. root.magicalchicken.com. (
+					0	; serial
+					1D	; refresh
+					1H	; retry
+					1W	; expire
+					3H )	; minimum
+	NS	@
+	A	127.0.0.1
+	AAAA	::1
+router		IN	A	192.168.99.1
+esxi		IN	A	192.168.99.15
+forrest		IN	A	192.168.99.20
+icinga		IN	A	192.168.99.20
+ltdan		IN	A	192.168.99.21
+mama		IN	A	192.168.99.23
+jenny		IN	A	192.168.99.22
+bubba		IN	A	192.168.99.24
+tex		IN	A	192.168.99.25
+git		IN	A	192.168.99.21
+dorothy		IN	A	192.168.99.26
+magicalchicken.com.	MX 10	ltdan.magicalchicken.com.
