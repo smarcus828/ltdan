@@ -1,0 +1,5 @@
+[elasticsearch]
+name=elasticsearch
+enabled=1
+gpgcheck=0
+baseurl=http://ltdan.magicalchicken.com/mirrors/elasticsearch

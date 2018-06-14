@@ -1,6 +1,6 @@
 ---
-- hosts: es_hosts
+- hosts: es_test
   become: yes
   become_method: sudo
   roles:
-  - base
+  - elasticsearch

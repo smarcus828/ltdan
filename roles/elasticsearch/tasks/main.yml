@@ -1,0 +1,17 @@
+---
+- name: Copy repo file over
+  copy:
+    src: "es.repo"
+    dest: "/etc/yum.repos.d/"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Install packages
+  become: yes
+  package:
+    name: "{{ item }}"
+    state: installed
+  with_items:
+    - elasticsearch
+

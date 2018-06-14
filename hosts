@@ -24,3 +24,11 @@ tex.magicalchicken.com
 
 [dnsmasq_servers]
 tex.magicalchicken.com
+
+[es_hosts]
+es-01 ansible_ssh_host=10.10.20.51
+es-02 ansible_ssh_host=10.10.20.52
+es-03 ansible_ssh_host=10.10.20.53
+
+[es_test]
+zz_three ansible_ssh_host=10.10.10.5
